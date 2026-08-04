@@ -15,8 +15,28 @@ include 'components/header.php';
         } elseif($_GET['page'] == 'register'){
             include 'page/register.php';
         } elseif($_GET['page'] == 'dashboard'){
+
+            if(!isset($_SESSION['user_id'])){
+                header('Location: index.php?page=login');
+                exit;
+            }
+
             $title = 'Dashboard';
             include 'page/dashboard.php';
+        } elseif($_GET['page'] == 'proseslogin'){
+            include "Controllers/Auth.php";
+            $input = [
+                'username' => $_POST['username'],
+                'password' => $_POST['password']
+            ];
+            $auth = new Auth();
+            $loginSuccess = $auth->login($input);
+        } elseif($_GET['page'] == 'logout'){
+            session_destroy();
+            header('Location: index.php?page=login');
+            exit;
+        } else {
+            echo "Page not found.";
         }
 
 ?>
