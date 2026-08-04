@@ -11,6 +11,10 @@ include 'components/header.php';
                     <div class="container">
     <?php
         if($_GET['page'] == 'login'){
+            if(isset($_SESSION['user_id'])){
+                header('Location: index.php?page=dashboard');
+                exit;
+            }
             include 'page/login.php';
         } elseif($_GET['page'] == 'register'){
             include 'page/register.php';
@@ -36,7 +40,8 @@ include 'components/header.php';
             header('Location: index.php?page=login');
             exit;
         } else {
-            echo "Page not found.";
+            header('Location: index.php?page=login&error=invalid_page');
+            exit;
         }
 
 ?>

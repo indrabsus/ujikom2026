@@ -10,6 +10,9 @@
                                                     case 'invalid_password':
                                                         echo "Invalid password.";
                                                         break;
+                                                    case 'invalid_page':
+                                                        echo "Page not found";
+                                                        break;
                                                     default:
                                                         echo "Login failed.";
                                                 }
