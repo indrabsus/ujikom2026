@@ -5,7 +5,9 @@ if(!isset($_GET['page'])){
     exit;
 }
 
-include 'components/header.php';
+require_once 'components/header.php';
+require_once "Controllers/Auth.php";
+$auth = new Auth();
 
 ?>
                     <div class="container">
@@ -28,18 +30,26 @@ include 'components/header.php';
             $title = 'Dashboard';
             include 'page/dashboard.php';
         } elseif($_GET['page'] == 'proseslogin'){
-            include "Controllers/Auth.php";
+            
             $input = [
                 'username' => $_POST['username'],
                 'password' => $_POST['password']
             ];
-            $auth = new Auth();
-            $loginSuccess = $auth->login($input);
+            
+            $auth->login($input);
         } elseif($_GET['page'] == 'logout'){
-            session_destroy();
-            header('Location: index.php?page=login');
-            exit;
-        } else {
+            $auth->logout();
+        } elseif($_GET['page'] == 'prosesregister'){
+            $input = [
+                'username' => $_POST['username'],
+                'password' => $_POST['password'],
+                'nama_lengkap' => $_POST['nama_lengkap']
+            ];
+            
+            $auth->register($input);
+        }
+        
+        else {
             header('Location: index.php?page=login&error=invalid_page');
             exit;
         }
@@ -47,7 +57,7 @@ include 'components/header.php';
 ?>
                     </div>
                <?php  
-include 'components/footer.php';
+require_once 'components/footer.php';
 
 
 ?>

@@ -19,6 +19,12 @@
                                                 ?>
                                             </div>
                                         <?php endif; ?>
+                                        <?php if(isset($_GET['success'])): ?>
+                                            <div class="alert alert-success" role="alert">
+                                                Login successful.
+                                            </div>
+                                        <?php endif; ?>
+                                                       
                                         <form action="index.php?page=proseslogin" method="POST">
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" id="inputUsername" type="text" placeholder="Username" name="username" />

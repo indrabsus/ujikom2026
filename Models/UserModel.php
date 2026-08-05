@@ -19,4 +19,19 @@ class UserModel
 
         return $user;
     }
+    public function create($data){
+        $username = $data['username'];
+        $password = password_hash($data['password'], PASSWORD_BCRYPT);
+        $nama_lengkap = $data['nama_lengkap'];
+        $role = $data['role'];
+
+        $queryUser = "INSERT INTO user (username, password, role) VALUES ('$username', '$password', '$role')";
+        $queryProfil = "INSERT INTO profil (id_user, nama_lengkap) VALUES (LAST_INSERT_ID(), '$nama_lengkap')";
+
+        if ($this->conn->query($queryUser) === TRUE) {
+            $this->conn->query($queryProfil);
+            return true;
+        }
+        return false;
+    }
 }
